@@ -28,7 +28,7 @@
 		KIT_BLOODY_SPAI = 3,
 		KIT_STEALTHY = 2,
 		KIT_SCREWED = 2,
-		KIT_SABOTAGE = 0, //SKYRAT EDIT: ORIGINAL: 2
+		KIT_SABOTAGE = 3,
 		KIT_GUN = 2,
 		KIT_MURDER = 2,
 		KIT_IMPLANTS = 1,
@@ -541,7 +541,7 @@
 	new/obj/item/toy/crayon/rainbow(src)
 
 /obj/item/storage/box/syndie_kit/romerol/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/romerol(src)
+	new /obj/item/reagent_containers/glass/bottle/hnz(src) //SKRYAT EDIT CHANGE
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/dropper(src)
 

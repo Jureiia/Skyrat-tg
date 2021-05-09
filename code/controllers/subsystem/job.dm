@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(job)
 
 	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
 	var/list/station_jobs
+	/// A list of all Head of Staff jobs.
+	var/list/head_of_staff_jobs
 	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
 	var/list/additional_jobs_with_icons
 	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
@@ -127,6 +129,8 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 		if(job.has_banned_species(player.client.prefs))
 			return FALSE
+		if(!job.has_required_languages(player.client.prefs))
+			return FALSE
 		//SKYRAT EDIT END
 		if(job.required_playtime_remaining(player.client))
 			return FALSE
@@ -141,6 +145,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	JobDebug("Freeing role: [rank]")
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -158,6 +170,9 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(job.has_banned_species(player.client.prefs))
 			JobDebug("FOC job not compatible with species, Player: [player]")
+			continue
+		if(!job.has_required_languages(player.client.prefs))
+			JobDebug("FOC job not compatible with languages, Player: [player]")
 			continue
 		//SKYRAT EDIT END
 		if(job.required_playtime_remaining(player.client))
@@ -204,6 +219,9 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(job.has_banned_species(player.client.prefs))
 			JobDebug("GRJ player has incompatible species, Player: [player]")
+			continue
+		if(!job.has_required_languages(player.client.prefs))
+			JobDebug("GRJ player has incompatible languages, Player: [player]")
 			continue
 		//SKYRAT EDIT END
 
@@ -394,6 +412,9 @@ SUBSYSTEM_DEF(job)
 				if(job.has_banned_species(player.client.prefs))
 					JobDebug("DO player has incompatible species, Player: [player], Job:[job.title]")
 					continue
+				if(!job.has_required_languages(player.client.prefs))
+					JobDebug("DO player has incompatible species, Player: [player], Job:[job.title]")
+					continue
 				//SKYRAT EDIT END
 
 				if(job.required_playtime_remaining(player.client))
@@ -526,7 +547,11 @@ SUBSYSTEM_DEF(job)
 	if(living_mob.mind)
 		living_mob.mind.assigned_role = rank
 
-	to_chat(M, "<b>You are the [rank].</b>")
+	//SKYRAT EDIT ADD - ALTERNATE JOB TITLES
+	var/display_rank = rank
+	if(M.client && M.client.prefs && M.client.prefs.alt_titles_preferences[rank])
+		display_rank = M.client.prefs.alt_titles_preferences[rank]
+	to_chat(M, "<span class='infoplain'><b>You are the [rank].</b></span>")
 	var/list/packed_items //SKYRAT CHANGE ADDITION - CUSTOMIZATION
 	if(job)
 		//SKYRAT EDIT ADDITION BEGIN - CUSTOMIZATION
@@ -549,10 +574,10 @@ SUBSYSTEM_DEF(job)
 			else
 				handle_auto_deadmin_roles(M.client, rank)
 
-		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+		to_chat(M, "<span class='infoplain'><b>As the [display_rank] you answer directly to [job.supervisors]. Special circumstances may change this. Your role is that of a [rank]. Regardless of what your job title may be, please work to fulfil that role.</b></span>") //SKYRAT EDIT - ALTERNATE JOB TITLES
 		job.radio_help_message(M)
 		if(job.req_admin_notify)
-			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+			to_chat(M, "<span class='infoplain'><b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b></span>")
 		if(CONFIG_GET(number/minimal_access_threshold))
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
 
@@ -680,7 +705,7 @@ SUBSYSTEM_DEF(job)
 	if(PopcapReached())
 		JobDebug("Popcap overflow Check observer located, Player: [player]")
 	JobDebug("Player rejected :[player]")
-	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
+	to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
 	unassigned -= player
 	player.ready = PLAYER_NOT_READY
 	player.client << output(player.ready, "lobbybrowser:imgsrc") //SKYRAT EDIT ADDITION
@@ -717,7 +742,13 @@ SUBSYSTEM_DEF(job)
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
 		return TRUE
-
+	//SKYRAT EDIT ADDITION
+	if(M.job)
+		if(M.job == "Prisoner")
+			destination = locate(/obj/effect/landmark/start/prisoner) in GLOB.landmarks_list
+			destination.JoinPlayerHere(M, buckle)
+			return TRUE
+	//SKYRAT EDIT END
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
 		destination.JoinPlayerHere(M, buckle)
@@ -815,7 +846,9 @@ SUBSYSTEM_DEF(job)
 	station_jobs = list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician", \
 		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
 		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
-		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
+		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Corrections Officer", "Prisoner")
+
+	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
 
 	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
 		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \

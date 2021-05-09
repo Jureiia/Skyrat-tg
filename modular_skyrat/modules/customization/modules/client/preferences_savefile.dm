@@ -455,6 +455,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["joblessrole"], joblessrole)
 	//Load prefs
 	READ_FILE(S["job_preferences"], job_preferences)
+	//Load Alternate Job Titles
+	S["alt_titles_preferences"]			>> alt_titles_preferences
+	alt_titles_preferences = SANITIZE_LIST(alt_titles_preferences)
+	if(SSjob)
+		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
+			if(alt_titles_preferences[job.title])
+				if(!(alt_titles_preferences[job.title] in job.alt_titles))
+					alt_titles_preferences.Remove(job.title)
 
 	//Quirks
 	READ_FILE(S["all_quirks"], all_quirks)
@@ -485,22 +493,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	randomise = SANITIZE_LIST(randomise)
 
-	if(gender == MALE)
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_male_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_m)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_m)
-	else if(gender == FEMALE)
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_female_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_female_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_f)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_f)
-	else
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_list)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_list)
-
+	hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
+	facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
+	underwear = sanitize_inlist(underwear, GLOB.underwear_list)
+	undershirt = sanitize_inlist(undershirt, GLOB.undershirt_list)
 	socks = sanitize_inlist(socks, GLOB.socks_list)
 	age = sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color = sanitize_hexcolor(hair_color, 3, 0)
@@ -635,6 +631,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	validate_species_parts()
 
+	READ_FILE(S["pref_culture"] , pref_culture)
+	READ_FILE(S["pref_location"] , pref_location)
+	READ_FILE(S["pref_faction"] , pref_faction)
+
+	READ_FILE(S["languages"] , languages)
+	var/do_get_common_later = FALSE
+	if(isnull(languages))
+		do_get_common_later = TRUE
+	languages = SANITIZE_LIST(languages)
+
+	if(!pref_culture || !GLOB.culture_cultures[pref_culture])
+		pref_culture = pref_species.cultures[1]
+	if(!pref_location || !GLOB.culture_locations[pref_location])
+		pref_location = pref_species.locations[1]
+	if(!pref_faction || !GLOB.culture_factions[pref_faction])
+		pref_faction = pref_species.factions[1]
+
+	validate_languages()
+	if(do_get_common_later)
+		try_get_common_language()
+
 	needs_update = TRUE
 	return TRUE
 
@@ -701,6 +718,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["joblessrole"] , joblessrole)
 	//Write prefs
 	WRITE_FILE(S["job_preferences"] , job_preferences)
+	//Write Alternate Job Titles
+	WRITE_FILE(S["alt_titles_preferences"], alt_titles_preferences)
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"] , all_quirks)
@@ -730,6 +749,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["undershirt_color"], undershirt_color)
 	WRITE_FILE(S["socks_color"], socks_color)
+
+	WRITE_FILE(S["pref_culture"] , pref_culture)
+	WRITE_FILE(S["pref_location"] , pref_location)
+	WRITE_FILE(S["pref_faction"] , pref_faction)
+
+	WRITE_FILE(S["languages"] , languages)
 
 	return TRUE
 
