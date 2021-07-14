@@ -66,6 +66,9 @@
 /datum/job/blueshield
 	banned_quirks = list(SEC_RESTRICTED_QUIRKS)
 
+/datum/job/nanotrasen_representative
+	banned_quirks = list(SEC_RESTRICTED_QUIRKS)
+
 // Command
 /datum/job/captain
 	banned_quirks = list(HEAD_RESTRICTED_QUIRKS)
@@ -115,21 +118,6 @@
 	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
 
 /datum/job/atmospheric_technician
-	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
-
-/datum/job/doctor
-	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
-
-/datum/job/virologist
-	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
-
-/datum/job/chemist
-	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
-
-/datum/job/roboticist
-	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
-
-/datum/job/scientist
 	banned_quirks = list(TECH_RESTRICTED_QUIRKS)
 
 /datum/job/proc/has_required_languages(datum/preferences/pref)

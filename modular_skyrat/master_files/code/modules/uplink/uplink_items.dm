@@ -69,6 +69,12 @@
 	item = /obj/item/katana
 	cost = 7
 
+/datum/uplink_item/dangerous/oddjob
+	name = "Deadly Bowler Hat"
+	desc = "An incredibly sharp edged bowler hat used by an infamously short operative."
+	item = /obj/item/clothing/head/sus_bowler
+	cost = 20
+
 //STEALTHY WEAPONS
 /datum/uplink_item/stealthy_weapons/cqc_traitor
 	name = "CQC Manual"
@@ -361,7 +367,7 @@
 	desc = "Themed after the infamous terrorist(or not), Johnny Robohand. You have no reason to fail your objectives with this kit. The gun inside requires your arm to be robotic. \
 			It comes with a robotic replacement arm. Wake the fuck up, samurai."
 	item = /obj/item/storage/backpack/duffelbag/syndie/loadout/robohand
-	cost = 20
+	cost = 35
 
 /datum/uplink_item/loadout_skyrat/robohand/purchase(mob/user, datum/component/uplink/U)
 	. = ..()
