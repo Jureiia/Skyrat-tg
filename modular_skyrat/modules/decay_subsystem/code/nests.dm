@@ -8,7 +8,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	max_integrity = 150
+	max_integrity = 100
 	light_range = 2
 	light_power = 1
 	light_color = LIGHT_COLOR_LAVA
@@ -36,7 +36,7 @@
 		registered_turfs += seen_turf
 		RegisterSignal(seen_turf, COMSIG_ATOM_ENTERED, .proc/proximity_trigger)
 
-/obj/structure/mob_spawner/obj_destruction(damage_flag)
+/obj/structure/mob_spawner/atom_destruction(damage_flag)
 	if(loot)
 		for(var/path in loot)
 			var/number = loot[path]
@@ -197,7 +197,7 @@
 	monster_types = list(/mob/living/simple_animal/hostile/ooze/grapes)
 	loot = list(/obj/item/resurrection_crystal)
 
-/obj/structure/mob_spawner/grapes/obj_destruction(damage_flag)
+/obj/structure/mob_spawner/grapes/atom_destruction(damage_flag)
 	if(loot)
 		for(var/path in loot)
 			var/number = loot[path]

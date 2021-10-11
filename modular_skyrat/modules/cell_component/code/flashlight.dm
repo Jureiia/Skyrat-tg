@@ -10,7 +10,7 @@
 	///Does this flashlight have modes?
 	var/has_modes = TRUE
 
-/obj/item/flashlight/Initialize()
+/obj/item/flashlight/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]-on")
 		turn_on()
@@ -72,17 +72,13 @@
 /obj/item/flashlight/proc/turn_off()
 	on = FALSE
 	update_brightness()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/flashlight/proc/turn_on(mob/user)
 	START_PROCESSING(SSobj, src)
 	update_brightness()
 	playsound(src, 'modular_skyrat/master_files/sound/effects/flashlight.ogg', 40, TRUE) //Credits to ERIS for the sound
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/flashlight/process(delta_time)
 	if(!on)

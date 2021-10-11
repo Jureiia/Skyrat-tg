@@ -6,7 +6,7 @@
 	///Sprite name of the genital, it's what shows up on character creation
 	var/genital_name = "Human"
 	///Type of the genital. For penises tapered/horse/human etc. for breasts quadruple/sixtuple etc...
-	var/genital_type = "human"
+	var/genital_type = SPECIES_HUMAN
 	///Used for determining what sprite is being used, derrives from size and type
 	var/sprite_suffix
 	///Used for input from the user whether to show a genital through clothing or not, always or never etc.
@@ -159,7 +159,10 @@
 	icon_state = passed_string
 
 /obj/item/organ/genital/testicles/get_description_string(datum/sprite_accessory/genital/gas)
-	return "You see a pair of testicles, they look [lowertext(balls_size_to_description(genital_size))]."
+	if(genital_name == "Internal") //Checks if Testicles are of Internal Variety
+		visibility_preference = GENITAL_SKIP_VISIBILITY //Removes visibility if yes.
+	else
+		return "You see a pair of testicles, they look [lowertext(balls_size_to_description(genital_size))]."
 
 /obj/item/organ/genital/testicles/build_from_dna(datum/dna/DNA, associated_key)
 	..()

@@ -1,7 +1,8 @@
 // Loot drops
-/obj/effect/spawner/lootdrop/wildwest/cash
+/obj/effect/spawner/random/wildwest_cash
 	name = "wild west cash"
-	fan_out_items = TRUE
+	spawn_all_loot = TRUE
+	spawn_random_offset = TRUE
 	loot = list(
 		/obj/item/stack/spacecash/c500,
 		/obj/item/stack/spacecash/c100
@@ -21,7 +22,6 @@
 	You locked yourself in the ship's engine room just in time before he got you. \
 	You have... a gun with you; one shot. Just in case nobody comes for you. \
 	At this point, you don't care who it is, you need to escape."
-	assignedrole = "Abandoned Syndicate"
 	outfit = /datum/outfit/wildwest_syndicate
 	can_use_alias = TRUE
 	any_station_species = TRUE

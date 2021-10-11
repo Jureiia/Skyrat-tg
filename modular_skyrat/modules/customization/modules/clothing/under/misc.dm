@@ -493,7 +493,6 @@
 	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
 	icon_state = "workpants_red"
 
-
 /obj/item/clothing/under/rank/captain/imperial
 	desc = "A white jumpsuit adorned with golden epaulets and a rank badge denoting a Captain. There are two ways to destroy a person, kill him, or ruin his reputation."
 	name = "captain's naval jumpsuit"
@@ -614,4 +613,47 @@
 	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
 
+/obj/item/clothing/under/rank/civilian/head_of_personnel/parade
+	name = "head of personnel's male formal uniform"
+	desc = "A luxurious uniform for the head of personnel, woven in a deep blue. On the lapel is a small pin in the shape of a corgi's head."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	icon_state = "hop_parade_male"
+	inhand_icon_state = "hop_parade_male"
+	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/civilian/head_of_personnel/parade/female
+	name = "head of personnel's female formal uniform"
+	icon_state = "hop_parade_female"
+
+/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
+	name = "chief medical officer's turtleneck"
+	desc = "A light blue turtleneck and brown khakis, for a doctor with a superior sense of style."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	icon_state = "cmoturtle"
+	inhand_icon_state = "b_suit"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/captain/kilt
+	desc = "Not a skirt, it is, however, armoured and decorated with a tartan sash."
+	name = "captain's kilt"
+	icon_state = "capkilt"
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	inhand_icon_state = "kilt"
+
+/obj/item/clothing/under/suit/helltaker
+	name = "red shirt with white pants"
+	desc = "No time. Busy gathering girls."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	icon_state = "helltaker"
+
+/obj/item/clothing/under/suit/helltaker/skirt
+	name = "red shirt with white skirt"
+	desc = "No time. Busy gathering boys."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	icon_state = "helltakerskirt"

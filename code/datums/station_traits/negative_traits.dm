@@ -46,17 +46,31 @@
 
 /datum/station_trait/hangover/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, .proc/on_job_after_spawn)
 
-/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/spawned_mob, joined_late)
+/datum/station_trait/hangover/revert()
+	for (var/obj/effect/landmark/start/hangover/hangover_spot in GLOB.start_landmarks_list)
+		QDEL_LIST(hangover_spot.debris)
+
+	return ..()
+
+/datum/station_trait/hangover/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned_mob)
 	SIGNAL_HANDLER
 
-	if(joined_late)
+	if(!prob(35))
 		return
-	if(prob(35))
-		var/obj/item/hat = pick(list(/obj/item/clothing/head/sombrero, /obj/item/clothing/head/fedora, /obj/item/clothing/mask/balaclava, /obj/item/clothing/head/ushanka, /obj/item/clothing/head/cardborg, /obj/item/clothing/head/pirate, /obj/item/clothing/head/cone))
-		hat = new hat(spawned_mob)
-		spawned_mob.equip_to_slot(hat, ITEM_SLOT_HEAD)
+	var/obj/item/hat = pick(
+		/obj/item/clothing/head/sombrero,
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/mask/balaclava,
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/cardborg,
+		/obj/item/clothing/head/pirate,
+		/obj/item/clothing/head/cone,
+		)
+	hat = new hat(spawned_mob)
+	spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_HEAD)
+
 
 /datum/station_trait/blackout
 	name = "Blackout"
@@ -80,17 +94,28 @@
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
 
+	// This station trait is checked when loot drops initialize, so it's too late
+	can_revert = FALSE
 
 /datum/station_trait/overflow_job_bureaucracy
 	name = "Overflow bureaucracy mistake"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 0 //SKYRAT EDIT: - CHANGES WEIGHT FROM FIVE TO ZERO
 	show_in_report = TRUE
-	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
 	var/chosen_job
 
 /datum/station_trait/overflow_job_bureaucracy/New()
 	. = ..()
+	var/list/jobs_to_use = list(
+		/datum/job/clown,
+		/datum/job/bartender,
+		/datum/job/cook,
+		/datum/job/botanist,
+		/datum/job/cargo_technician,
+		/datum/job/mime,
+		/datum/job/janitor,
+		/datum/job/prisoner,
+		)
 	chosen_job = pick(jobs_to_use)
 	RegisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/set_overflow_job_override)
 
@@ -138,6 +163,12 @@
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
+
+	// Way too much is done on atoms SS to be reverted, and it'd look
+	// kinda clunky on round start. It's not impossible to make this work,
+	// but it's a project for...someone else.
+	can_revert = FALSE
+
 	var/static/list/weapon_types
 
 /datum/station_trait/revenge_of_pun_pun/New()

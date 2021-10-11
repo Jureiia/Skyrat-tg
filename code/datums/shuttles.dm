@@ -116,11 +116,9 @@
 	name = "Base Shuttle Template (Cargo)"
 	who_can_purchase = null
 
-/* //SKYRAT EDIT REMOVAL - MOVED TO MODULAR
 /datum/map_template/shuttle/ferry
 	port_id = "ferry"
 	name = "Base Shuttle Template (Ferry)"
-*/
 
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"
@@ -451,6 +449,13 @@
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
+
+/datum/map_template/shuttle/emergency/casino
+	suffix = "casino"
+	name = "Lucky Jackpot Casino Shuttle"
+	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
+	admin_notes = "The ship is a bit chunky, so watch where you park it."
+	credit_cost = 7777
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

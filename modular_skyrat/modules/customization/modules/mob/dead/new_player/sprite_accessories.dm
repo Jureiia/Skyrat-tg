@@ -106,7 +106,7 @@
 	icon = 'modular_skyrat/master_files/icons/mob/mutant_bodyparts.dmi'
 	special_render_case = TRUE
 	default_color = DEFAULT_SECONDARY
-	recommended_species = list("lizard", "unathi", "ashlizard", "silverlizard")
+	recommended_species = list(SPECIES_LIZARD, SPECIES_UNATHI, SPECIES_LIZARD_ASH, SPECIES_LIZARD_SILVER)
 	relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
 	genetic = TRUE
 
@@ -179,15 +179,15 @@
 	name = "Knee-high - Bee (Old)"
 	icon_state = "bee_knee_old"
 
-/datum/sprite_accessory/underwear/socks/christmas_norm
+/datum/sprite_accessory/socks/christmas_norm
 	name = "Normal - Christmas"
 	icon_state = "christmas_norm"
 
-/datum/sprite_accessory/underwear/socks/candycaner_norm
+/datum/sprite_accessory/socks/candycaner_norm
 	name = "Normal - Red Candy Cane"
 	icon_state = "candycaner_norm"
 
-/datum/sprite_accessory/underwear/socks/candycaneg_norm
+/datum/sprite_accessory/socks/candycaneg_norm
 	name = "Normal - Green Candy Cane"
 	icon_state = "candycaneg_norm"
 
@@ -227,7 +227,7 @@
 	name = "Thigh-high - Fishnet"
 	icon_state = "fishnet"
 
-/datum/sprite_accessory/socks/fishnet_thigh
+/datum/sprite_accessory/socks/pantyhose_ripped
 	name = "Pantyhose - Ripped"
 	icon_state = "pantyhose_ripped"
 	use_static = null
@@ -365,6 +365,10 @@
 	icon_state = "chastcage"
 	use_static = null
 
+/datum/sprite_accessory/underwear/lizared
+	name = "LIZARED Underwear"
+	icon_state = "lizared"
+	use_static = TRUE
 
 /datum/sprite_accessory/underwear/male_briefs
 	has_digitigrade = TRUE

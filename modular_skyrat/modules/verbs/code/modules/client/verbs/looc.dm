@@ -39,6 +39,16 @@
 	mob.log_talk(msg,LOG_OOC, tag="LOOC")
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
+
+	//so the ai can post looc text
+	if(istype(mob,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/ai = mob
+		heard = get_hearers_in_view(7, ai.eyeobj)
+	//so the ai can see looc text
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
+		if(ai.client && !(ai in heard) && (ai.eyeobj in heard))
+			heard += ai
+
 	var/list/admin_seen = list()
 	for(var/mob/M in heard)
 		if(!M.client)
@@ -57,16 +67,5 @@
 		var/client/C = cli
 		if (admin_seen[C])
 			to_chat(C, "<span class='looc'>[ADMIN_FLW(usr)] <span class='prefix'>LOOC:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span>")
-		else if (C.prefs.skyrat_toggles & CHAT_LOOC_ADMIN)
+		else if (C.prefs.read_preference(/datum/preference/toggle/admin/see_looc))
 			to_chat(C, "<span class='rlooc'>[ADMIN_FLW(usr)] <span class='prefix'>(R)LOOC:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span>")
-
-/client/proc/toggle_admin_looc_global()
-	set name = "See/Hide Global LOOC"
-	set category = "Preferences.Admin"
-	set desc = "Show Global LOOC"
-	if(!holder)
-		return
-	prefs.skyrat_toggles ^= CHAT_LOOC_ADMIN
-	prefs.save_preferences()
-	to_chat(usr, "<span class='infoplain'>You will [(prefs.skyrat_toggles & CHAT_LOOC_ADMIN) ? "now" : "no longer"] hear LOOC globally.</span>")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Togle Admin LOOC", "[usr.client.prefs.skyrat_toggles & CHAT_LOOC_ADMIN ? "Enabled" : "Disabled"]"))
