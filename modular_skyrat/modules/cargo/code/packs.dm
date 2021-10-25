@@ -109,10 +109,10 @@
 	desc = "Contains the tier I Medigun cells."
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_MEDICAL
-	contains = list(/obj/item/medicell/brute1,
-					/obj/item/medicell/burn1,
-					/obj/item/medicell/toxin1,
-					/obj/item/medicell)
+	contains = list(/obj/item/weaponcell/medical/brute,
+					/obj/item/weaponcell/medical/burn,
+					/obj/item/weaponcell/medical/toxin,
+					/obj/item/weaponcell/medical)
 	crate_name = "Medicell Replacemnt Crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -139,6 +139,16 @@
 					/obj/item/ammo_box/magazine/multi_sprite/croon,
 					/obj/item/ammo_box/magazine/multi_sprite/croon)
 	crate_name = "unmarked weapons crate"
+	dangerous = TRUE
+	
+/datum/supply_pack/security/pepperballplus
+	name = "Pepperball Self-Defense Supply Crate"
+	desc = "Uneasy times, corporate security get lost during the transfer? Protect yourself.. somewhat."
+	cost = CARGO_CRATE_VALUE * 15
+	contraband = TRUE
+	contains = list(/obj/item/storage/box/gunset/pepperball,
+					/obj/item/storage/box/gunset/pepperball)
+	crate_name = "Pepperball Pistol Crate"
 	dangerous = TRUE
 
 /datum/supply_pack/security/wildcat
