@@ -18,7 +18,7 @@
 						continue
 					line += ORG.get_description_string(G)
 				if(length(line))
-					to_chat(usr, "<span class='notice'>[jointext(line, "\n")]</span>")
+					to_chat(usr, span_notice("[jointext(line, "\n")]"))
 			if("open_examine_panel")
 				tgui.holder = src
 				tgui.ui_interact(usr) //datum has a tgui component, here we open the window
@@ -56,7 +56,7 @@
 	set desc = "Allows you to toggle which underwear should show or be hidden. Underwear will obscure genitals."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, "<span class='warning'>You can't toggle underwear visibility right now...</span>")
+		to_chat(usr, span_warning("You can't toggle underwear visibility right now..."))
 		return
 
 	var/underwear_button = underwear_visibility & UNDERWEAR_HIDE_UNDIES ? "Show underwear" : "Hide underwear"
@@ -80,8 +80,9 @@
 		update_body()
 	return
 
-/mob/living/carbon/human/revive(full_heal = 0, admin_revive = 0)
-	if(..())
+/mob/living/carbon/human/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(.)
 		if(dna && dna.species)
 			dna.species.spec_revival(src)
 
@@ -91,12 +92,12 @@
 	set desc = "Allows you to choose to try and hide your mutant bodyparts under your clothes."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, "<span class='warning'>You can't do this right now...</span>")
+		to_chat(usr, span_warning("You can't do this right now..."))
 		return
 	if(!try_hide_mutant_parts && !do_after(src, 3 SECONDS,target = src))
 		return
 	try_hide_mutant_parts = !try_hide_mutant_parts
-	to_chat(usr, "<span class='notice'>[try_hide_mutant_parts ? "You try and hide your mutant body parts under your clothes." : "You no longer try and hide your mutant body parts"]</span>")
+	to_chat(usr, span_notice("[try_hide_mutant_parts ? "You try and hide your mutant body parts under your clothes." : "You no longer try and hide your mutant body parts"]"))
 	update_mutant_bodyparts()
 
 /mob/living/carbon/human/verb/acting()
@@ -105,26 +106,21 @@
 	set desc = "Slur, stutter or jitter for a short duration."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, "<span class='warning'>You can't do this right now...</span>")
+		to_chat(usr, span_warning("You can't do this right now..."))
 		return
 
 	var/list/choices = list("Drunkenness", "Stuttering", "Jittering")
 	if(slurring >= 10 || stuttering >= 10 || jitteriness >= 10) //Give the option to end the impairment if there's one ongoing.
-		var/disable = input(src, "Stop performing existing impairment?", "Impairments") as null|anything in choices
+		var/disable = tgui_input_list(src, "Stop performing existing impairment?", "Impairments", choices)
 		if(disable)
 			acting_expiry(disable)
 			return
 
-	var/impairment = input(src, "Select an impairment to perform:", "Impairments") as null|anything in choices
+	var/impairment = tgui_input_list(src, "Select an impairment to perform:", "Impairments", choices)
 	if(!impairment)
 		return
 
-	var/duration = input(src, "Enter how long you will feign [impairment]. (1 - 60 seconds)", "Duration in seconds", 25) as num|null
-	if(!isnum(duration))
-		return
-	if(duration > 60)
-		to_chat(src, "Please choose a duration in seconds between 1 to 60.")
-		return
+	var/duration = tgui_input_number(src, "How long would you like to feign [impairment] for?", "Duration in seconds", 25, 36000)
 	switch(impairment)
 		if("Drunkenness")
 			slurring = duration

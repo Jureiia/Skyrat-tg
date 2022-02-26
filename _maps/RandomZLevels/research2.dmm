@@ -191,8 +191,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -242,8 +241,7 @@
 	auto_name = 1;
 	dir = 4;
 	name = "Engineering APC";
-	pixel_x = 24;
-	pixel_y = 2
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -478,7 +476,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Gateway APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -562,8 +560,7 @@
 "ct" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark,
@@ -607,7 +604,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cG" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -629,7 +626,7 @@
 	id = "cryopodg2";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -690,7 +687,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1203,7 +1200,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "ej" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -1339,7 +1336,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "ew" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -1493,8 +1490,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "eT" = (
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/dark,
@@ -1528,7 +1524,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Cryostatis APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -1684,7 +1680,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "fu" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red,
@@ -1721,7 +1717,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Vault APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2948,7 +2944,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2974,8 +2970,7 @@
 	id = "cryopodg1";
 	name = "panic lockdown button"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
+/obj/machinery/airalarm/directional/south{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -2991,7 +2986,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "iI" = (
-/obj/structure/reagent_dispensers/peppertank{
+/obj/structure/reagent_dispensers/wall/peppertank{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3069,7 +3064,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/dorm)
 "iZ" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -3535,7 +3530,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dorms APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3934,8 +3929,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 32
 	},
 /turf/open/floor/iron{
@@ -3995,7 +3989,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4015,7 +4009,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Escape APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4394,8 +4388,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mX" = (
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/green{
@@ -4557,7 +4550,8 @@
 /area/awaymission/research/interior/escapepods)
 "yr" = (
 /obj/machinery/airalarm/engine{
-	pixel_y = 23
+	pixel_y = 23;
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/awaymission/research/interior/engineering)
@@ -4643,9 +4637,8 @@
 /turf/open/floor/engine,
 /area/awaymission/research/interior/engineering)
 "Gv" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Engineering - Supermatter";
-	dir = 8;
 	name = "engineering camera"
 	},
 /turf/open/floor/engine,

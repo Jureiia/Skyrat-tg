@@ -207,9 +207,8 @@
 	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
-		cb.InvokeAsync()
+	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
+		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = FALSE
@@ -230,10 +229,9 @@
 	CHECK_TICK
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in GLOB.huds)
-		for(var/m in GLOB.player_list)
-			var/mob/M = m
-			H.add_hud_to(M)
+	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
+		for(var/mob/player as anything in GLOB.player_list)
+			antagonist_hud.add_hud_to(player)
 
 	CHECK_TICK
 
@@ -311,6 +309,8 @@
 
 	//Antagonists
 	parts += antag_report()
+
+	parts += opfor_report() //SKYRAT EDIT ADDITION
 
 	parts += hardcore_random_report()
 
@@ -447,7 +447,7 @@
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
-	var/borg_spacer = FALSE //inserts an extra linebreak to seperate AIs from independent borgs, and then multiple independent borgs.
+	var/borg_spacer = FALSE //inserts an extra linebreak to separate AIs from independent borgs, and then multiple independent borgs.
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
@@ -632,27 +632,6 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		//SKYRAT EDIT ADDITION BEGIN - AMBITIONS
-		if(A.owner && A.owner.my_ambitions)
-			var/datum/ambitions/AMB = A.owner.my_ambitions
-			result += "<br>Narrative: [AMB.narrative]"
-			result += "<br>Objectives:"
-			for(var/stri in AMB.objectives)
-				result += "<br>* [stri]"
-			var/intensity = "NOT SET"
-			switch(AMB.intensity)
-				if(AMBITION_INTENSITY_STEALTH)
-					intensity = "Stealth"
-				if(AMBITION_INTENSITY_MILD)
-					intensity = "Mild"
-				if(AMBITION_INTENSITY_MEDIUM)
-					intensity = "Medium"
-				if(AMBITION_INTENSITY_SEVERE)
-					intensity = "Severe"
-				if(AMBITION_INTENSITY_EXTREME)
-					intensity = "Extreme"
-			result += "<br>Intensity: [intensity]"
-		//SKYRAT EDIT ADDITION END - AMBITIONS
 		result += "<br><br>"
 		CHECK_TICK
 
@@ -677,7 +656,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

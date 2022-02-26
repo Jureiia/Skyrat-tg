@@ -8,8 +8,8 @@
 	skill_name = "Glass-Blowing Master"
 	skill_description = "Master the ability to use glass within glassblowing."
 	skill_icon = "certificate"
-	activate_message = "<span class='notice'>The faults within the glass are now to be seen.</span>"
-	deactivate_message = "<span class='notice'>Glass becomes more obscured.</span>"
+	activate_message = span_notice("The faults within the glass are now to be seen.")
+	deactivate_message = span_notice("Glass becomes more obscured.")
 
 /obj/item/glassblowing
 	icon = 'modular_skyrat/modules/primitive_fun/icons/prim_fun.dmi'
@@ -17,7 +17,7 @@
 /obj/item/glassblowing/glass_globe
 	name = "glass globe"
 	desc = "A glass bowl that is capable of carrying things."
-	icon_state = "glass_bowl"
+	icon_state = "glass_globe"
 
 /datum/export/glassblowing
 	cost = 3000
@@ -34,7 +34,7 @@
 /obj/item/glassblowing/glass_lens
 	name = "glass lens"
 	desc = "A glass bowl that is capable of carrying things."
-	icon_state = "glass_bowl"
+	icon_state = "glass_lens"
 
 /obj/item/reagent_containers/glass/bowl/blowing_glass
 	name = "glass bowl"

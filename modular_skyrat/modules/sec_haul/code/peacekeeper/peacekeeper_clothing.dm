@@ -24,6 +24,23 @@
 	icon_state = "beret"
 	greyscale_colors = "#EAEAEA"
 
+/obj/item/clothing/head/soft/black/junior_officer
+	name = "peacekeeper junior officer cap"
+	desc = "A junior officers cap, wearing this increases your robustness, apparently."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/hats.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/head.dmi'
+	icon_state = "juniorsoft"
+	soft_type = "junior"
+	mutant_variants = NONE
+
+/obj/item/clothing/head/sec/peacekeeper/sergeant
+	name = "peacekeeper sergeant hat"
+	desc = "A drill sergeants cap, wearing this increases your loudness. So they say."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/hats.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/head.dmi'
+	icon_state = "peacekeeper_sergeant_cap"
+	mutant_variants = NONE
+
 /obj/item/clothing/head/hos/beret/peacekeeper
 	name = "head of security's peacekeeper beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
@@ -64,6 +81,19 @@
 	name = "blue peacekeeper uniform"
 	icon_state = "bsecurity"
 
+/obj/item/clothing/under/rank/security/peacekeeper/junior
+	name = "peacekeeper junior officer poloshirt"
+	desc = "A sleek peackeeper poloshirt and pants, this one is special. It's for junior officers."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/uniform.dmi'
+	worn_icon_digi = 'modular_skyrat/master_files/icons/mob/clothing/uniform_digi.dmi'
+	icon_state = "junior_officer"
+
+/obj/item/clothing/under/rank/security/peacekeeper/sergeant
+	name = "peacekeeper sergeant uniform"
+	desc = "A sleek peackeeper uniform, signifying the rank of Sergeant."
+	icon_state = "peacekeeper_sergeant"
+
 /obj/item/clothing/under/rank/security/warden/peacekeeper
 	name = "peacekeeper wardens suit"
 	desc = "A formal security suit for officers complete with Armadyne belt buckle."
@@ -97,6 +127,20 @@
 	name = "black peacekeeper vest"
 	icon_state = "peacekeeper_black"
 	worn_icon_state = "peacekeeper_black"
+
+/obj/item/clothing/suit/toggle/labcoat/junior_officer
+	name = "junior officer coat"
+	desc = "An Armadyne coat that offers very minimal protection."
+	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'
+	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/suit.dmi'
+	icon_state = "juniorjacket"
+	inhand_icon_state = "jacket"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	allowed = list(/obj/item/gun/ballistic/automatic/pistol/pepperball, /obj/item/melee/baton)
+	armor = list(MELEE = 15, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 50)
+	toggle_noun = "zipper"
+	mutant_variants = NONE
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/peacekeeper
 	name = "armored peacekeeper trenchcoat"
@@ -186,7 +230,7 @@
 	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return FALSE
 	if(locked)
-		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
+		to_chat(user, span_warning("[parent] seems to be locked!"))
 		return
 
 	var/atom/A = parent
@@ -198,7 +242,7 @@
 	remove_from_storage(gun_to_draw, get_turf(user))
 	playsound(parent, 'modular_skyrat/modules/sec_haul/sound/holsterout.ogg', 50, TRUE, -5)
 	INVOKE_ASYNC(user, /mob/.proc/put_in_hands, gun_to_draw)
-	user.visible_message("<span class='warning'>[user] draws [gun_to_draw] from [parent]!</span>", "<span class='notice'>You draw [gun_to_draw] from [parent].</span>")
+	user.visible_message(span_warning("[user] draws [gun_to_draw] from [parent]!"), span_notice("You draw [gun_to_draw] from [parent]."))
 
 
 /datum/component/storage/concrete/peacekeeper/mob_item_insertion_feedback(mob/user, mob/M, obj/item/I, override = FALSE)
@@ -212,11 +256,11 @@
 
 	for(var/mob/viewing in viewers(user, null))
 		if(M == viewing)
-			to_chat(usr, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
+			to_chat(usr, span_notice("You put [I] [insert_preposition]to [parent]."))
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
+			viewing.show_message(span_notice("[M] puts [I] [insert_preposition]to [parent]."), MSG_VISUAL)
 		else if(I && I.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
+			viewing.show_message(span_notice("[M] puts [I] [insert_preposition]to [parent]."), MSG_VISUAL)
 
 /obj/item/storage/belt/security/peacekeeper/ComponentInitialize()
 	. = ..()
@@ -314,34 +358,3 @@
 	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'
 	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/suit.dmi'
 	icon_state = "peacekeeper_riot"
-
-//HARDSUITS
-/obj/item/clothing/head/helmet/space/hardsuit/security_peacekeeper
-	name = "Armadyne SS-01 Voidsuit Helmet"
-	desc = "An Armadyne brand voidsuit helmet, with a decent layer of armor, this one comes in the peacekeeper colors."
-	icon = 'modular_skyrat/master_files/icons/obj/clothing/hats.dmi'
-	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/head.dmi'
-	icon_state = "hardsuit0-peacekeeper"
-	inhand_icon_state = "sec_helm"
-	hardsuit_type = "peacekeeper"
-	armor = list(MELEE = 35, BULLET = 15, LASER = 30,ENERGY = 40, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
-
-/obj/item/clothing/suit/space/hardsuit/security_peacekeeper
-	name = "Armadyne SS-01 Voidsuit"
-	desc = "An Armadyne brand voidsuit, with a decent layer of armor, this one comes in the peacekeeper colors."
-	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'
-	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/suit.dmi'
-	worn_icon_digi = 'modular_skyrat/master_files/icons/mob/clothing/suit_digi.dmi'
-	icon_state = "hardsuit-peacekeeper"
-	inhand_icon_state = "sec_hardsuit"
-	armor = list(MELEE = 35, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security_peacekeeper
-	hardsuit_tail_colors = list("#BBBBBB", "#444444", "#333377")
-
-/obj/machinery/suit_storage_unit/security_peacekeeper
-	suit_type = /obj/item/clothing/suit/space/hardsuit/security_peacekeeper
-	mask_type = /obj/item/clothing/mask/gas/sechailer
-
-/obj/item/clothing/suit/space/hardsuit/security_peacekeeper/Initialize()
-	. = ..()
-	allowed = GLOB.security_hardsuit_allowed

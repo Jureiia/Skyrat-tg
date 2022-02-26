@@ -8,8 +8,8 @@
 	skill_name = "Ceramic Master"
 	skill_description = "Master the ability to use clay within ceramics."
 	skill_icon = "certificate"
-	activate_message = "<span class='notice'>The faults within the clay are now to be seen.</span>"
-	deactivate_message = "<span class='notice'>Clay becomes more obscured.</span>"
+	activate_message = span_notice("The faults within the clay are now to be seen.")
+	deactivate_message = span_notice("Clay becomes more obscured.")
 
 /obj/structure/water_source/puddle/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/ore/glass))
@@ -129,7 +129,7 @@
 /obj/structure/throwing_wheel/attackby(obj/item/I, mob/living/user, params)
 	var/spinning_speed = HAS_TRAIT(user, TRAIT_CERAMIC_MASTER) ? MASTER_SPIN : DEFAULT_SPIN
 	if(istype(I, /obj/item/ceramic/clay))
-		if(length(contents) >= 1)
+		if(length(contents))
 			return
 		if(!do_after(user, spinning_speed, target = src))
 			return
@@ -172,7 +172,7 @@
 	if(in_use)
 		return
 	in_use = TRUE
-	if(length(contents) >= 1)
+	if(length(contents))
 		var/user_input = tgui_alert(user, "What would you like to do?", "Choice Selection", list("Create", "Remove"))
 		if(!user_input)
 			in_use = FALSE
