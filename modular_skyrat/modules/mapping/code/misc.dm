@@ -16,7 +16,7 @@
 
 /obj/item/mod/control/pre_equipped/prototype/hauler
 	theme = /datum/mod_theme/prototype/hauler
-	applied_cell = /obj/item/stock_parts/cell/high/plus
+	applied_cell = /obj/item/stock_parts/cell/high
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/clamp, /obj/item/mod/module/flashlight, /obj/item/mod/module/tether)
 
 /obj/machinery/suit_storage_unit/industrial/hauler
@@ -31,5 +31,5 @@
 	desc = "A complex set of actuators, micro-seals and a simple guide on how to install it, This... \"Modification\" allows the plating around the joints to retract, giving minor protection and a bit better mobility."
 	removable = TRUE
 	complexity = 1
-	added_slowdown = -0.25
+	speed_added = 0.25
 	armor_values = list(MELEE = 20, BULLET = 25, LASER = 15, ENERGY = 20)

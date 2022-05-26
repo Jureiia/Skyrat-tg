@@ -25,8 +25,6 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
 	layer = ABOVE_WINDOW_LAYER
 
 	var/obj/effect/overlay/status_display_text/message1_overlay
@@ -561,6 +559,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 /obj/item/circuit_component/status_display/input_received(datum/port/input/port)
 	// Just use command handling built into status display.
 	// The option inputs thankfully sanitize command and picture for us.
+
+	if(!connected_display)
+		return
 
 	var/command_value = command_map[command.value]
 	var/datum/signal/status_signal = new(list("command" = command_value))

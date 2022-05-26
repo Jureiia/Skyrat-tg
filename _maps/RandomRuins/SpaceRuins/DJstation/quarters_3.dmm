@@ -110,8 +110,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "L" = (
-/obj/structure/bed,
-/obj/item/bedsheet/purple,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/purple{
+	dir = 4
+	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/djstation)
 "N" = (
@@ -138,7 +142,7 @@
 "W" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "X" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink{
@@ -150,7 +154,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Z" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
