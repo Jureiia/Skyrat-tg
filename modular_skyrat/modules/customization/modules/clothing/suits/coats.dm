@@ -164,18 +164,14 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/urban/polychromic
+/obj/item/clothing/suit/urban
 	name = "urban coat"
 	desc = "A coat built for urban life."
-	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'
-	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/suit.dmi'
-	icon_state = "urbanjacket"
+	icon_state = "urban_coat"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/urban/polychromic/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/polychromic, list("#55DD55", "#EEEEAA", "#333333"))
-
+	greyscale_config = /datum/greyscale_config/urban_coat
+	greyscale_config_worn = /datum/greyscale_config/urban_coat/worn
+	greyscale_colors = "#252e5a#938060#66562b"
 
 /obj/item/clothing/suit/toggle/deckard
 	name = "runner coat"
@@ -200,18 +196,6 @@
 /obj/item/clothing/suit/jacket/leather/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#55DD55"))
-
-/obj/item/clothing/suit/toggle/brit/sec
-	name = "high vis armored vest"
-	desc = "Oi bruv' you got a loicence for that?"
-	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'
-	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/suit.dmi'
-	icon_state = "hazardbg"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	blood_overlay_type = "coat"
-	toggle_noun = "zipper"
-	armor = list(MELEE = 10, BULLET = 5, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-
 
 /obj/item/clothing/suit/toggle/lawyer/black/better
 	icon = 'modular_skyrat/master_files/icons/obj/clothing/suits.dmi'

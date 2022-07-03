@@ -1506,15 +1506,10 @@
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/hypernoblium/on_mob_metabolize(mob/living/L)
-	. = ..()
-	if(isplasmaman(L))
-		ADD_TRAIT(L, TRAIT_NOFIRE, type)
-
-/datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/L)
-	if(isplasmaman(L))
-		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
-	return ..()
+/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isplasmaman(M))
+		M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hypernob_protection)
+	..()
 
 /datum/reagent/healium
 	name = "Healium"
@@ -1905,7 +1900,7 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		// Heads of staff and the captain have a "royal metabolism"
 		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
@@ -2386,7 +2381,7 @@
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.getorganslot(ORGAN_SLOT_ZOMBIE))
-		var/obj/item/organ/zombie_infection/nodamage/ZI = new()
+		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
 		ZI.Insert(exposed_mob)
 
 /datum/reagent/magillitis

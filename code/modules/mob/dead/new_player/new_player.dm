@@ -335,7 +335,7 @@
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		dat += "<div class='notice red' style='font-size: 125%'>Only Observers may join at this time.</div><br>"
 	dat += "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
-	dat += "<div class='notice'>Alert Level: [capitalize(num2seclevel(SSsecurity_level.current_level))]</div>"
+	dat += "<div class='notice'>Alert Level: [capitalize(SSsecurity_level.get_current_level_as_text())]</div>" // SKYRAT EDIT ADDITION
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
@@ -487,5 +487,6 @@
 	if (I)
 		I.ui_interact(src)
 
-	// Add verb for re-opening the interview panel, and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	add_verb(client, /client/verb/fix_tgui_panel)

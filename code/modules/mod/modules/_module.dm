@@ -78,7 +78,7 @@
 			balloon_alert(mod.wearer, "not active!")
 		return
 	// SKYRAT EDIT START - DEPLOYABLE EVERYTHING OVER EVERYTHING
-	if(mod.wearer.wear_suit != mod.chestplate)
+	if((mod.wearer.wear_suit != mod.chestplate) && !allowed_inactive)
 		balloon_alert(mod.wearer, "chestplate retracted!")
 		return
 	// SKYRAT EDIT END
@@ -96,7 +96,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
-	if(!mod.active || mod.activating || !mod.get_charge())
+	if(((!mod.active || mod.activating) && !allowed_inactive) || !mod.get_charge()) //SKYRAT ADDITION: INACTIVE USE
 		balloon_alert(mod.wearer, "unpowered!")
 		return FALSE
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
@@ -230,9 +230,7 @@
 
 /// Checks if there is enough power in the suit
 /obj/item/mod/module/proc/check_power(amount)
-	if(mod.get_charge() < amount)
-		return FALSE
-	return TRUE
+	return mod.check_charge(amount)
 
 /// Adds additional things to the MODsuit ui_data()
 /obj/item/mod/module/proc/add_ui_data()
@@ -305,12 +303,13 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
-	var/datum/action/item_action/mod/pinned_module/action = pinned_to[REF(user)]
-	if(action)
-		qdel(action)
-	else
-		action = new(mod, src, user)
-		action.Grant(user)
+	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
+	if(existing_action)
+		mod.remove_item_action(existing_action)
+		return
+
+	var/datum/action/item_action/mod/pinned_module/new_action = new(mod, src, user)
+	mod.add_item_action(new_action)
 
 /// On drop key, concels a device item.
 /obj/item/mod/module/proc/dropkey(mob/living/user)

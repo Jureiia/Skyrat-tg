@@ -210,8 +210,13 @@
 			. += span_notice("You could remove [core] with a <b>wrench</b>.")
 		else
 			. += span_notice("You could use a <b>MOD core</b> on it to install one.")
-		if(!mod_pai)
+		if(!mod_pai) // SKYRAT EDIT BEGIN - PAI in Modsuits
 			. += span_notice("You could install a pAI with a <b>pAI card</b>.")
+/* 		if(ai)
+			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
+		else
+			. += span_notice("You could install an AI with an <b>intellicard</b>.") SKYRAT EDIT END */
+	. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
@@ -514,7 +519,7 @@
 		return
 	var/module_reference = display_names[pick]
 	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
-	if(!istype(picked_module) || user.incapacitated())
+	if(!istype(picked_module))
 		return
 	picked_module.on_select()
 
@@ -551,9 +556,6 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(wearer)]
-		if(action)
-			action.Grant(wearer)
 	// SKYRAT EDIT START - pAIs in MODsuits
 	if(mod_pai)
 		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ref(mod_pai)]
@@ -572,7 +574,7 @@
 		if(old_module.active)
 			old_module.on_deactivation(display_message = !deleting, deleting = deleting)
 	old_module.on_uninstall(deleting = deleting)
-	QDEL_LIST(old_module.pinned_to)
+	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
 
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
@@ -600,6 +602,9 @@
 
 /obj/item/mod/control/proc/subtract_charge(amount)
 	return core?.subtract_charge(amount) || FALSE
+
+/obj/item/mod/control/proc/check_charge(amount)
+	return core?.check_charge(amount) || FALSE
 
 /obj/item/mod/control/proc/update_charge_alert()
 	if(!wearer)
@@ -683,10 +688,12 @@
 		uninstall(part)
 		return
 	if(part in mod_parts)
+		if(!wearer)
+			part.forceMove(src)
+			return
 		retract(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
-		return
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER
