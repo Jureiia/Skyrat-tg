@@ -20,7 +20,6 @@
 	new /obj/item/storage/box/gunset/pdh_captain(src) // SKYRAT EDIT ADDITION
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
-	new /obj/item/summon_beacon/command_drobe(src) // SKYRAT EDIT ADDITION
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -45,7 +44,6 @@
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
-	new /obj/item/summon_beacon/bumbles(src) // SKYRAT EDIT ADDITION
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -84,7 +82,7 @@
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	//new /obj/item/clothing/suit/armor/vest/warden/alt(src) //SKYRAT EDIT REMOVAL
 	new /obj/item/clothing/under/rank/security/warden/formal(src)
-	new /obj/item/clothing/suit/security/warden(src) //SKYRAT ADDITION - FORMAL COAT
+	new /obj/item/clothing/suit/jacket/warden/blue(src) //SKYRAT ADDITION - FORMAL COAT
 	//new /obj/item/clothing/under/rank/security/warden/skirt(src) SKYRAT EDIT REMOVAL
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/holosign_creator/security(src)
@@ -302,7 +300,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/paper/fluff/jobs/security/court_judgement (src)
 	new /obj/item/pen (src)
-	new /obj/item/clothing/suit/judgerobe (src)
+	new /obj/item/clothing/suit/costume/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/storage/briefcase(src)
 
