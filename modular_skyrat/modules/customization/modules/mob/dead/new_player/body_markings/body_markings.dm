@@ -61,6 +61,28 @@
 	affected_bodyparts = CHEST
 	gendered = FALSE
 
+/datum/body_marking/other/flushed_cheeks
+	name = "Flushed Cheeks"
+	icon_state = "flushed_cheeks"
+	default_color = "#CCCCCC"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/other/nose_blemish
+	name = "Nose Blemish"
+	icon_state = "nose_blemish"
+	default_color = "#CCCCCC"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/other/brows
+	name = "Brows"
+	icon_state = "brows"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/other/eyeliner
+	name = "Eyeliner"
+	icon_state = "eyeliner"
+	affected_bodyparts = HEAD
+
 /datum/body_marking/other/weight
 	name = "Body Weight"
 	icon_state = "weight"

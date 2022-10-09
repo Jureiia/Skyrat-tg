@@ -41,8 +41,8 @@ Assistant
 	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
-	uniform = /obj/item/clothing/under/color/random
-
+	belt = /obj/item/modular_computer/tablet/pda/assistant
+	uniform = /obj/item/clothing/under/color/random // SKYRAT EDIT ADD
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()
@@ -83,7 +83,7 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
-		H.update_inv_w_uniform()
+		H.update_worn_undersuit()
 
 
 /proc/get_configured_colored_assistant_type()

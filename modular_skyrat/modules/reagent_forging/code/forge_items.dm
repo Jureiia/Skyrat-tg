@@ -69,17 +69,16 @@
 	var/average_wait = 1 SECONDS
 	///the path of the item that will be spawned upon completion
 	var/spawn_item
+	//because who doesn't want to have a plasma sword?
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
 
-/obj/item/forging/incomplete/attackby(obj/item/I, mob/living/user, params)
+/obj/item/forging/incomplete/tong_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(istype(I, /obj/item/forging/tongs))
-		var/obj/search_obj = locate(/obj) in I.contents
-		if(search_obj)
-			to_chat(user, span_warning("The tongs are already holding something, make room."))
-			return
-		forceMove(I)
-		I.icon_state = "tong_full"
+	if(length(tool.contents) > 0)
+		user.balloon_alert("tongs are full already!")
 		return
+	forceMove(tool)
+	tool.icon_state = "tong_full"
 
 /obj/item/forging/incomplete/chain
 	name = "incomplete chain"
@@ -165,6 +164,8 @@
 /obj/item/forging/complete
 	///the path of the item that will be created
 	var/spawning_item
+	//because who doesn't want to have a plasma sword?
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
 
 /obj/item/forging/complete/examine(mob/user)
 	. = ..()
@@ -288,3 +289,14 @@
 		qdel(src)
 		return
 	return ..()
+
+/obj/item/stack/tong_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(length(tool.contents) > 0)
+		user.balloon_alert(user, "tongs are full already!")
+		return
+	if(!material_type && !custom_materials)
+		user.balloon_alert(user, "unusable material!")
+		return
+	forceMove(tool)
+	tool.icon_state = "tong_full"

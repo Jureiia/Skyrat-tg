@@ -373,7 +373,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -424,7 +424,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -511,7 +511,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/cup/beaker = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -570,7 +570,11 @@
 		/obj/machinery/vending/custom = "Custom Vendor",
 		/obj/machinery/vending/dorms = "LustWish",	//SKYRAT EDIT CHANGE - ERP UPDATE - ORIGINAL: /obj/machinery/vending/dorms = "KinkVend"
 		/obj/machinery/vending/access/command = "Command Outfitting Station", //SKYRAT EDIT ADDITION
-		/obj/machinery/vending/barbervend = "Fab-O-Vend") //SKYRAT EDIT ADDITION
+		/obj/machinery/vending/barbervend = "Fab-O-Vend", //SKYRAT EDIT ADDITION
+		/obj/machinery/vending/imported = "NT Sustenance Supplier", //SKYRAT EDIT ADDITION
+		/obj/machinery/vending/imported/yangyu = "Fudobenda", //SKYRAT EDIT ADDITION
+		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange", //SKYRAT EDIT ADDITION
+		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",) //SKYRAT EDIT ADDITION
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -703,7 +707,7 @@
 	build_path = /obj/machinery/chem_master
 	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
@@ -755,7 +759,7 @@
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
 	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
-	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(loc != user)
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
@@ -773,7 +777,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/limbgrower/fullupgrade
@@ -782,7 +786,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator/femto  = 1,
-		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
+		/obj/item/reagent_containers/cup/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/protolathe/department/medical
@@ -977,6 +981,12 @@
 	name = "Mecha Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/mechpad
+	req_components = list()
+
+/obj/item/circuitboard/machine/botpad
+	name = "Bot launchpad"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/botpad
 	req_components = list()
 
 //Security
@@ -1365,3 +1375,15 @@
 		/obj/item/stack/sheet/plasteel = 5,
 		/obj/item/stock_parts/scanning_module = 4,
 		)
+
+/obj/item/circuitboard/machine/coffeemaker
+	name = "Coffeemaker (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/coffeemaker
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/stock_parts/water_recycler = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+	)

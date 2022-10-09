@@ -103,7 +103,7 @@
 
 /obj/item/clothing/suit/straight_jacket/kinky_sleepbag/equipped(mob/user, slot)
 	var/mob/living/carbon/human/affected_human = user
-	if(ishuman(user) && slot == ITEM_SLOT_OCLOTHING)
+	if(ishuman(user) && (slot & ITEM_SLOT_OCLOTHING))
 		ADD_TRAIT(user, TRAIT_FLOORED, CLOTHING_TRAIT)
 
 		affected_human.cut_overlay(affected_human.overlays_standing[SHOES_LAYER])
@@ -168,7 +168,7 @@
 			to_chat(user, span_purple("You are finally free! The bag is no longer constricting your movements."))
 
 			affected_human.add_overlay(affected_human.overlays_standing[SHOES_LAYER])
-			affected_human.update_inv_shoes()
+			affected_human.update_worn_shoes()
 			affected_human.add_overlay(affected_human.overlays_standing[BELT_LAYER])
 			affected_human.add_overlay(affected_human.overlays_standing[NECK_LAYER])
 			affected_human.add_overlay(affected_human.overlays_standing[BACK_LAYER])
@@ -178,7 +178,7 @@
 			affected_human.add_overlay(affected_human.overlays_standing[HAIR_LAYER])
 			affected_human.add_overlay(affected_human.overlays_standing[SHOES_LAYER])
 
-			affected_human.update_inv_shoes()
+			affected_human.update_worn_shoes()
 			affected_human.regenerate_icons()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
@@ -196,5 +196,5 @@
 
 /obj/item/clothing/suit/straight_jacket/kinky_sleepbag/doStrip(mob/stripper, mob/owner)
 	. = ..()
-	owner.update_inv_hands()
-	stripper.update_inv_hands()
+	owner.update_held_items()
+	stripper.update_held_items()

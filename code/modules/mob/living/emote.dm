@@ -11,26 +11,25 @@
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
-	/// Timer for the blush visual to wear off
-	var/blush_timer = TIMER_ID_NULL
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(. && isliving(user))
-		var/mob/living/living_user = user
-		ADD_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
-		living_user.update_body()
+	if(. && ishuman(user)) // Give them a visual blush effect if they're human
+		var/mob/living/carbon/human/human_user = user
+		ADD_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
+		human_user.update_body_parts()
+		playsound(get_turf(user), 'modular_skyrat/modules/emotes/sound/emotes/blush.ogg', 25, TRUE) // Skrat Edit: Returns the .ogg that was played
 
 		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
 		var/list/key_emotes = GLOB.emote_list["blush"]
 		for(var/datum/emote/living/blush/living_emote in key_emotes)
-			// The existing timer restarts if it's already running
-			blush_timer = addtimer(CALLBACK(living_emote, .proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			// The existing timer restarts if it is already running
+			addtimer(CALLBACK(living_emote, .proc/end_blush, human_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/emote/living/blush/proc/end_blush(mob/living/living_user)
-	if(!QDELETED(living_user))
-		REMOVE_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
-		living_user.update_body()
+/datum/emote/living/blush/proc/end_blush(mob/living/carbon/human/human_user)
+	if(!QDELETED(human_user))
+		REMOVE_TRAIT(human_user, TRAIT_BLUSHING, "[type]")
+		human_user.update_body_parts()
 
 #undef BLUSH_DURATION
 
@@ -117,19 +116,15 @@
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
 
-/datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
-	var/mob/living/simple_animal/S = user
-	if(istype(S) && S.deathmessage)
-		message_simple = S.deathmessage
+/datum/emote/living/deathgasp/run_emote(mob/living/user, params, type_override, intentional)
+	if(user.death_message)
+		message_simple = user.death_message
 	. = ..()
 	message_simple = initial(message_simple)
-
-	if(. && user.deathsound)
-		if(isliving(user))
-			var/mob/living/L = user
-			if(!L.can_speak_vocal() || L.oxyloss >= 50)
-				return //stop the sound if oxyloss too high/cant speak
-		playsound(user, user.deathsound, 200, TRUE, TRUE)
+	if(. && user.death_sound)
+		if(!user.can_speak_vocal() || user.oxyloss >= 50)
+			return //stop the sound if oxyloss too high/cant speak
+		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
 	key = "drool"

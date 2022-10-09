@@ -36,11 +36,11 @@
 	if(src == affected_human.w_uniform)
 		if(affected_mob.gender == FEMALE)
 			icon_state = "latex_catsuit_female"
-			affected_mob.update_inv_w_uniform()
+			affected_mob.update_worn_undersuit()
 
 		if(affected_mob.gender == MALE)
 			icon_state = "latex_catsuit_male"
-			affected_mob.update_inv_w_uniform()
+			affected_mob.update_worn_undersuit()
 
 	//For giving taurs proper sprites
 	if(affected_human.dna.species.mutant_bodyparts["taur"])
@@ -92,6 +92,6 @@
 /obj/item/clothing/under/misc/latex_catsuit/Initialize(mapload)
 	. = ..()
 	breasts_overlay = mutable_appearance('modular_skyrat/modules/modular_items/lewd_items/icons/mob/lewd_clothing/lewd_uniform/lewd_uniform.dmi', "none", ABOVE_MOB_LAYER)
-	breasts_overlay.icon_state = "breasts"
+	breasts_overlay.icon_state = ORGAN_SLOT_BREASTS
 	breasts_icon_overlay = mutable_appearance('modular_skyrat/modules/modular_items/lewd_items/icons/obj/lewd_clothing/lewd_uniform.dmi', "none")
-	breasts_icon_overlay.icon_state = "breasts"
+	breasts_icon_overlay.icon_state = ORGAN_SLOT_BREASTS
