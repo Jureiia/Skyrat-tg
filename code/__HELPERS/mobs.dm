@@ -137,7 +137,7 @@
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
-		if(gender==FEMALE)
+		if(gender == FEMALE)
 			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
 		else
 			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
@@ -312,10 +312,8 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
-	var/atom/target_loc = null
-	if(target && !isturf(target))
-		target_loc = target.loc
-
+	if(!isnum(delay))
+		CRASH("do_after was passed a non-number delay: [delay || "null"].")
 	if(!interaction_key && target)
 		interaction_key = target //Use the direct ref to the target
 	if(interaction_key) //Do we have a interaction_key now?
@@ -325,6 +323,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
+	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
 	if(SSmove_manager.processing_on(user, SSspacedrift))
@@ -338,6 +337,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/datum/progressbar/progbar
 	if(progress)
 		progbar = new(user, delay, target || user)
+
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -377,7 +378,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(interaction_key)
 		LAZYREMOVE(user.do_afters, interaction_key)
-
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_ENDED)
 
 ///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
 /proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
@@ -796,6 +797,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(BODY_ZONE_PRECISE_GROIN)
 			return BODY_ZONE_CHEST
 		if(BODY_ZONE_PRECISE_EYES)
+			return BODY_ZONE_HEAD
+		if(BODY_ZONE_PRECISE_MOUTH)
 			return BODY_ZONE_HEAD
 		if(BODY_ZONE_PRECISE_R_HAND)
 			return BODY_ZONE_R_ARM

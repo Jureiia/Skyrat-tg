@@ -110,7 +110,7 @@
 /datum/round_event_control/ion_storm
 	chaos_level = EVENT_CHAOS_LOW
 
-/datum/round_event_control/meteor_wave/major_dust
+/datum/round_event_control/space_dust/major_dust
 	chaos_level = EVENT_CHAOS_LOW
 
 /datum/round_event_control/market_crash
@@ -126,7 +126,7 @@
 	chaos_level = EVENT_CHAOS_LOW
 
 /datum/round_event_control/bureaucratic_error
-	chaos_level = EVENT_CHAOS_LOW
+	chaos_level = EVENT_CHAOS_DISABLED
 
 /datum/round_event_control/camera_failure
 	chaos_level = EVENT_CHAOS_LOW
@@ -150,6 +150,9 @@
 	chaos_level = EVENT_CHAOS_LOW
 
 /datum/round_event_control/supermatter_surge
+	chaos_level = EVENT_CHAOS_LOW
+
+/datum/round_event_control/tram_malfunction
 	chaos_level = EVENT_CHAOS_LOW
 
 // MODERATE CHAOS PRESETS
@@ -246,7 +249,7 @@
 *	FOR SUBTYPES
 */
 
-/datum/round_event_control/pirates/enclave
+/datum/round_event_control/pirates/nri
 	chaos_level = EVENT_CHAOS_DISABLED
 
 /datum/round_event_control/pirates/dutchman
