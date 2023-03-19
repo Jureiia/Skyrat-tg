@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
-	..()
+	. = ..()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -169,13 +169,13 @@
 		add_colour = FALSE
 
 /obj/item/organ/internal/heart/cursed/Insert(mob/living/carbon/accursed, special = FALSE, drop_if_replaced = TRUE)
-	..()
+	. = ..()
 	last_pump = world.time // give them time to react
 	if(owner)
 		to_chat(owner, span_userdanger("Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!"))
 
 /obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
-	..()
+	. = ..()
 	accursed.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 /datum/action/item_action/organ_action/cursed_heart
@@ -273,7 +273,7 @@
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
 		to_chat(owner, span_userdanger("You feel yourself dying, but you refuse to give up!"))
-		owner.heal_overall_damage(15, 15, BODYTYPE_ORGANIC)
+		owner.heal_overall_damage(brute = 15, burn = 15, required_bodytype = BODYTYPE_ORGANIC)
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
@@ -514,7 +514,7 @@
 	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	regenerating.revive(HEAL_ALL)
+	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.
 	if(!QDELETED(src))
