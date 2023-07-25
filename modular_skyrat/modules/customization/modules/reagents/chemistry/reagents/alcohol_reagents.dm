@@ -256,8 +256,8 @@
 	name = "glass of hotlime miami"
 	desc = "This looks very aesthetically pleasing."
 
-/datum/reagent/consumable/ethanol/hotlime_miami/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(1.5 MINUTES * REM * delta_time)
+/datum/reagent/consumable/ethanol/hotlime_miami/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	M.set_drugginess(1.5 MINUTES * REM * seconds_per_tick)
 	M.adjustStaminaLoss(-2)
 	return ..()
 
@@ -599,6 +599,15 @@
 	return ..()
 
 
+/datum/reagent/consumable/ethanol/bloodshot_base
+	name = "Bloodshot Base"
+	description = "The bootleg blend of nutrients and alcohol that goes into making Bloodshots. Doesn't taste too great on its own, for Hemophages at least."
+	color = "#c29ca1"
+	boozepwr = 25 // Still more concentrated than in Bloodshot.
+	taste_description = "nutritious mix with an alcoholic kick to it"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
 /datum/reagent/consumable/ethanol/bloodshot
 	name = "Bloodshot"
 	description = "The history of the 'Bloodshot' is based in a mix of flavor-neutral chems devised to help deliver nutrients to a Hemophage's tumorous organs. Due to the expense of the real thing and the clinical nature of it, this liquor has been designed as a 'improvised' alternative; though, still tasting like a hangover cure. It smells like iron, giving a clue to the key ingredient."
@@ -633,9 +642,9 @@
 
 #undef BLOODSHOT_DISGUST
 
-/datum/reagent/consumable/ethanol/bloodshot/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/bloodshot/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(drinker.blood_volume < drinker.blood_volume_normal)
-		drinker.blood_volume = max(drinker.blood_volume, min(drinker.blood_volume + (3 * REM * delta_time), BLOOD_VOLUME_NORMAL)) //Bloodshot quickly restores blood loss.
+		drinker.blood_volume = max(drinker.blood_volume, min(drinker.blood_volume + (3 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL)) //Bloodshot quickly restores blood loss.
 
 	return ..()
 
@@ -734,12 +743,12 @@
 		quality = DRINK_FANTASTIC
 	return ..()
 
-/datum/reagent/consumable/ethanol/hippie_hooch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/hippie_hooch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	for(var/effect in status_effects_to_clear)
 		drinker.remove_status_effect(effect)
-	drinker.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time, FALSE, TRUE)
-	drinker.adjustToxLoss(-0.2 * REM * delta_time, FALSE, required_biotype = affected_biotype)
-	drinker.adjust_drunk_effect(-10 * REM * delta_time)
+	drinker.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * seconds_per_tick, FALSE, TRUE)
+	drinker.adjustToxLoss(-0.2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	drinker.adjust_drunk_effect(-10 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
@@ -764,7 +773,7 @@
 		quality = DRINK_GOOD
 	return ..()
 
-/datum/reagent/consumable/ethanol/research_rum/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/research_rum/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	if(prob(5))
 		drinker.say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
 	..()

@@ -74,7 +74,8 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		))
+		/obj/item/spess_knife,
+	))
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -89,7 +90,7 @@
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/electric, src)//This can be changed if this is too much //It's been 5 years // SKYRAT EDIT - ORIGINAL: SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
@@ -247,6 +248,7 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/vial, //SKYRAT EDIT HYPOSPRAYS
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -265,16 +267,21 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/weaponcell/medical, //SKYRAT EDIT MEDIGUNS
+		/obj/item/handheld_soulcatcher, // SKYRAT EDIT SOULCATCHERS
 		/obj/item/wrench/medical,
-		))
+	))
 
 /obj/item/storage/belt/medical/paramedic
+	name = "EMT belt"
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
@@ -293,6 +300,9 @@
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/ert/PopulateContents()
@@ -300,7 +310,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -438,7 +448,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
-		))
+	))
 
 
 /obj/item/storage/belt/mining/vendor/PopulateContents()
@@ -480,8 +490,8 @@
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
-		/obj/item/soulstone
-		))
+		/obj/item/soulstone,
+	))
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -497,14 +507,14 @@
 	icon_state = "championbelt"
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
-	custom_materials = list(/datum/material/gold=400)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(list(
-		/obj/item/clothing/mask/luchador
-		))
+		/obj/item/clothing/mask/luchador,
+	))
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -529,8 +539,8 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.set_holdable(list(
 		/obj/item/food,
-		/obj/item/reagent_containers/cup/glass
-		))
+		/obj/item/reagent_containers/cup/glass,
+	))
 
 /obj/item/storage/belt/military/snack/full
 
@@ -540,35 +550,35 @@
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/food/candy,
-		/obj/item/food/cheesiehonkers,
-		/obj/item/food/cheesynachos,
-		/obj/item/food/chips,
-		/obj/item/food/cubannachos,
-		/obj/item/food/donkpocket,
-		/obj/item/food/nachos,
-		/obj/item/food/nugget,
-		/obj/item/food/rofflewaffles,
-		/obj/item/food/sosjerky,
-		/obj/item/food/spacetwinkie,
-		/obj/item/food/spaghetti/pastatomato,
-		/obj/item/food/syndicake,
-		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
-		/obj/item/reagent_containers/cup/glass/dry_ramen,
-		/obj/item/reagent_containers/cup/soda_cans/cola,
-		/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/cup/soda_cans/pwr_game,
-		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
-		/obj/item/reagent_containers/cup/soda_cans/space_up,
-		/obj/item/reagent_containers/cup/soda_cans/starkist,
+			/obj/item/food/candy,
+			/obj/item/food/cheesiehonkers,
+			/obj/item/food/cheesynachos,
+			/obj/item/food/chips,
+			/obj/item/food/cubannachos,
+			/obj/item/food/donkpocket,
+			/obj/item/food/nachos,
+			/obj/item/food/nugget,
+			/obj/item/food/rofflewaffles,
+			/obj/item/food/sosjerky,
+			/obj/item/food/spacetwinkie,
+			/obj/item/food/spaghetti/pastatomato,
+			/obj/item/food/syndicake,
+			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
+			/obj/item/reagent_containers/cup/glass/dry_ramen,
+			/obj/item/reagent_containers/cup/soda_cans/cola,
+			/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
+			/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
+			/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+			/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
+			/obj/item/reagent_containers/cup/soda_cans/space_up,
+			/obj/item/reagent_containers/cup/soda_cans/starkist,
 		))
 		new rig_snacks(src)
 
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
 	desc = "A belt used by abductor agents."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
@@ -586,14 +596,14 @@
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
-	icon_state = "grenadebeltold"
+	icon_state = "military"
 	inhand_icon_state = "security"
-	worn_icon_state = "grenadebeltold"
+	worn_icon_state = "military"
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
 	desc = "A tactical assault belt."
-	icon_state = "assaultbelt"
+	icon_state = "assault"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 
@@ -629,7 +639,7 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
-		))
+	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
@@ -657,8 +667,8 @@
 	. = ..()
 	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(
-		/obj/item/gun/magic/wand
-		))
+		/obj/item/gun/magic/wand,
+	))
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -701,7 +711,8 @@
 		/obj/item/reagent_containers/cup/bucket, //SKYRAT EDIT - Bucket
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		))
+		/obj/item/wirebrush,
+	))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -725,7 +736,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/a762,
 		/obj/item/ammo_casing/shotgun,
-		))
+	))
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -808,7 +819,7 @@
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BELT)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
@@ -851,9 +862,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
@@ -870,9 +881,10 @@
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
 		/obj/item/shovel/spade,
-		))
+	))

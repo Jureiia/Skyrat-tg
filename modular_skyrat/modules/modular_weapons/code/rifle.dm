@@ -17,6 +17,7 @@
 	fire_delay = 5
 	can_suppress = FALSE
 	burst_size = 1
+	actions_types = list()
 	mag_display = FALSE
 	mag_display_ammo = FALSE
 	empty_indicator = FALSE
@@ -30,7 +31,7 @@
 	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
 /obj/item/gun/ballistic/automatic/cfa_rifle/give_manufacturer_examine()
-	AddComponent(/datum/component/manufacturer_examine, COMPANY_CANTALAN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
 
 /obj/item/gun/ballistic/automatic/cfa_rifle/give_gun_safeties()
 	return

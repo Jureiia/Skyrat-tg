@@ -32,9 +32,6 @@
 
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/gun/ballistic/automatic/mg34/give_manufacturer_examine()
-	AddComponent(/datum/component/manufacturer_examine, COMPANY_OLDARMS)
-
 /obj/item/gun/ballistic/automatic/mg34/examine(mob/user)
 	. = ..()
 	. += "<b>RMB with an empty hand</b> to [cover_open ? "close" : "open"] the dust cover."
@@ -128,9 +125,9 @@
 	RegisterSignal(src, COMSIG_GUN_FIRED, PROC_REF(process_heat))
 	START_PROCESSING(SSobj, src)
 
-/obj/item/gun/ballistic/automatic/mg34/mg42/process(delta_time)
+/obj/item/gun/ballistic/automatic/mg34/mg42/process(seconds_per_tick)
 	if(barrel_heat > 0)
-		barrel_heat -= BARREL_COOLDOWN_RATE * delta_time
+		barrel_heat -= BARREL_COOLDOWN_RATE * seconds_per_tick
 		update_appearance()
 
 /obj/item/gun/ballistic/automatic/mg34/mg42/examine(mob/user)
