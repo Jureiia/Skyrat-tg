@@ -1,7 +1,7 @@
 
 #define CAMERA_PICTURE_SIZE_HARD_LIMIT 21
 
-/obj/item/camera//SKYRAT EDIT - ICON OVERRIDEN BY AESTHETICS - SEE MODULE
+/obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/art/camera.dmi'
 	desc = "A polaroid camera."
@@ -187,7 +187,7 @@
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
-	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
+	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
